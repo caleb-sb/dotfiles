@@ -76,7 +76,7 @@ export ZSH=/usr/share/oh-my-zsh/
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/zsh-autosuggestions.zsh
 plugins=(web-search dirhistory sudo git)
 
 if [ -f $ZSH/oh-my-zsh.sh ]; then
@@ -500,10 +500,6 @@ alias personal='cp -Rf /personal/* ~'
 #
 
 alias lg="lazygit"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 eval "$(oh-my-posh init zsh --config /home/caleb/.config/oh-my-posh/config.json )"
 
