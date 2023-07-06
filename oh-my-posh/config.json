@@ -1,0 +1,120 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "palette": {
+    "background": "#1F1F28",
+    "foreground": "#DCD7BA",
+    "black": "#16161D",
+    "red": "#C34043",
+    "green": "#76946a",
+    "gold": "#C0A36E",
+    "blue": "#7E9CD8",
+    "purple": "#957FB8",
+    "bright-black": "#727169",
+    "bright-red": "#E82424",
+    "bright-green": "#98BB6C",
+    "bright-gold": "#E6C384",
+    "bright-blue": "#7FB4CA",
+    "bright-purple": "#938AA9"
+  },
+  "version": 2,
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "shell",
+          "style": "diamond",
+          "foreground": "p:background",
+          "background": "p:blue",
+          "leading_diamond": "\u256d\u2500\ue0b6",
+          "template": " {{ .Name }} "
+        },
+        {
+          "type": "root",
+          "style": "diamond",
+          "foreground": "#FFFB38",
+          "background": "#ef5350",
+          "template": "<parentBackground>\ue0b0</> \uf0e7 ",
+          "properties": {
+            "root_icon": "\uf292"
+          }
+        },
+        {
+          "type": "path",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "p:foreground",
+          "background": "p:green",
+          "template": " {{ .Path }} ",
+          "properties": {
+            "style": "full"
+          }
+        },
+        {
+          "type": "git",
+          "style": "diamond",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "p:background",
+          "background": "p:bright-gold",
+          "trailing_diamond": "\ue0b4",
+          "background_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}p:bright-gold{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:red{{ end }}",
+            "{{ if gt .Ahead 0 }}p:purple{{ end }}",
+            "{{ if gt .Behind 0 }}p:red{{ end }}"
+          ],
+          "template": " {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0}} \uf692 {{ .StashCount }}{{ end }}{{ if gt .WorktreeCount 0}} \uf1bb {{ .WorktreeCount }}{{ end }} ",
+          "properties": {
+            "fetch_stash_count": true,
+            "fetch_status": true,
+            "fetch_upstream_icon": true
+          }
+        }
+      ],
+      "newline": true
+    },
+    {
+      "type": "prompt",
+      "alignment": "right",
+      "segments": [
+        {
+          "type": "node",
+          "style": "diamond",
+          "foreground": "p:background",
+          "background": "p:purple",
+          "leading_diamond": " \ue0b6",
+          "trailing_diamond": "\ue0b4",
+          "template": " {{ .Full }}"
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "p:blue",
+          "template": "\u2502"
+        }
+      ],
+      "newline": true
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "p:bright-blue",
+          "template": "\u2570\u2500\u257C "
+        }
+      ],
+      "newline": true
+    }
+  ],
+  "osc99": true
+}
