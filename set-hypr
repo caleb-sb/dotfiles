@@ -131,17 +131,11 @@ ISYAY=/sbin/yay
 if [ -f "$ISYAY" ]; then 
     echo -e "$COK - yay was located, moving on."
 else 
-    echo -e "$CWR - Yay was NOT located.. yay is (still) required"
-    read -rep $'[\e[1;33mACTION\e[0m] - Would you like to install yay (y,n) ' INSTYAY
-    if [[ $INSTYAY == "Y" || $INSTYAY == "y" ]]; then
-        git clone https://aur.archlinux.org/yay.git &>> $INSTLOG
-        cd yay
-        makepkg -si --noconfirm &>> ../$INSTLOG
-        cd ..
-    else
-        echo -e "$CER - Yay is (still) required for this script, now exiting"
-        exit
-    fi
+    echo -e "$CWR - Yay was NOT located.. yay is (still) required. Installing yay..."
+    git clone https://aur.archlinux.org/yay.git &>> $INSTLOG
+    cd yay
+    makepkg -si --noconfirm &>> ../$INSTLOG
+    cd ..
     # update the yay database
     echo -e "$CNT - Updating the yay database..."
     yay -Suy --noconfirm &>> $INSTLOG
@@ -168,125 +162,122 @@ install_software() {
 }
 
 ### Install all of the above pacakges ####
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like to install the packages? (y,n) ' INST
-if [[ $INST == "Y" || $INST == "y" ]]; then
-    # Setup Nvidia if it was selected
-    if [[ "$ISNVIDIA" == true ]]; then
-        echo -e "$CNT - Nvidia setup stage, this may take a while..."
-        for SOFTWR in linux-headers nvidia-dkms qt5-wayland qt5ct libva libva-nvidia-driver-git
-        do
-            install_software $SOFTWR
-        done
-    
-        # update config
-        sudo sed -i 's/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
-        sudo mkinitcpio --config /etc/mkinitcpio.conf --generate /boot/initramfs-custom.img
-        echo -e "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia.conf &>> $INSTLOG
-    fi
-
-    # Stage 1 - main components
-    echo -e "$CNT - Stage 1 - Installing main components, this may take a while..."
-    for SOFTWR in hyprland kitty waybar jq mako swww swaylock-effects wlogout xdg-desktop-portal-hyprland swappy grim slurp thunar
-    do
-           install_software $SOFTWR 
-    done
-
-    # Stage 2 - more tools
-    echo -e "$CNT - Stage 2 - Installing additional tools and utilities, this may take a while..."
-    for SOFTWR in polkit-gnome python-requests pamixer pavucontrol brightnessctl bluez bluez-utils blueman gvfs thunar-archive-plugin file-roller btop pacman-contrib neovim zsh zsh-completions zsh-syntax-highlighting dmenu google-chrome meld lazygit ripgrep prettierd mintstick firefox bibata-cursor-theme
+if [[ "$ISNVIDIA" == true ]]; then
+    echo -e "$CNT - Nvidia setup stage, this may take a while..."
+    for SOFTWR in linux-headers nvidia-dkms qt5-wayland qt5ct libva libva-nvidia-driver-git
     do
         install_software $SOFTWR
     done
 
-    # Stage 3 - some visual tools
-    echo -e "$CNT - Stage 3 - Installing theme and visual related tools and utilities, this may take a while..."
-    for SOFTWR in ttf-jetbrains-mono-nerd noto-fonts-emoji lxappearance xfce4-settings sddm qt5-svg qt5-quickcontrols2 qt5-graphicaleffects starship
-    do
-        install_software $SOFTWR
-    done
-
-    # Start the bluetooth service
-    echo -e "$CNT - Starting the Bluetooth Service..."
-    sudo systemctl enable --now bluetooth.service &>> $INSTLOG
-    sleep 2
-
-    # Enable the sddm login manager service
-    echo -e "$CNT - Enabling the SDDM Service..."
-    sudo systemctl enable sddm &>> $INSTLOG
-    sleep 2
-    
-    # Clean out other portals
-    echo -e "$CNT - Cleaning out conflicting xdg portals..."
-    yay -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk &>> $INSTLOG
+    # update config
+    sudo sed -i 's/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
+    sudo mkinitcpio --config /etc/mkinitcpio.conf --generate /boot/initramfs-custom.img
+    echo -e "options nvidia-drm modeset=1" | sudo tee -a /etc/modprobe.d/nvidia.conf &>> $INSTLOG
 fi
+
+# Stage 1 - main components
+echo -e "$CNT - Stage 1 - Installing main components, this may take a while..."
+for SOFTWR in hyprland kitty waybar jq mako swww swaylock-effects wlogout xdg-desktop-portal-hyprland swappy grim slurp thunar
+do
+       install_software $SOFTWR 
+done
+
+echo -e "$CNT - Stage 1.5 - Installing nodejs tools (the pnpm way)..."
+curl -fsSL https://get.pnpm.io/install.sh | sh - && pnpm env use --global lts
+
+# Stage 2 - more tools
+echo -e "$CNT - Stage 2 - Installing additional tools and utilities, this may take a while..."
+for SOFTWR in polkit-gnome python-requests pamixer pavucontrol brightnessctl bluez bluez-utils blueman gvfs thunar-archive-plugin file-roller btop pacman-contrib neovim zsh zsh-completions zsh-syntax-highlighting dmenu google-chrome meld lazygit ripgrep mintstick firefox prettierd bibata-cursor-theme
+do
+    install_software $SOFTWR
+done
+
+
+# Stage 3 - some visual tools
+echo -e "$CNT - Stage 3 - Installing theme and visual related tools and utilities, this may take a while..."
+for SOFTWR in ttf-jetbrains-mono-nerd noto-fonts-emoji lxappearance xfce4-settings sddm qt5-svg qt5-quickcontrols2 qt5-graphicaleffects starship
+do
+    install_software $SOFTWR
+done
+
+# Start the bluetooth service
+echo -e "$CNT - Starting the Bluetooth Service..."
+sudo systemctl enable --now bluetooth.service &>> $INSTLOG
+sleep 2
+
+# Enable the sddm login manager service
+echo -e "$CNT - Enabling the SDDM Service..."
+sudo systemctl enable sddm &>> $INSTLOG
+sleep 2
+
+# Clean out other portals
+echo -e "$CNT - Cleaning out conflicting xdg portals..."
+yay -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk &>> $INSTLOG
 
 ### Copy Config Files ###
-read -rep $'[\e[1;33mACTION\e[0m] - Would you like to copy config files? (y,n) ' CFG
-if [[ $CFG == "Y" || $CFG == "y" ]]; then
-    echo -e "$CNT - Copying config files..."
+echo -e "$CNT - Copying config files..."
 
-    # Setup each application
-    # check for existing config folders and backup 
-    for DIR in hypr kitty mako nvim swaylock waybar wlogout
-    do 
-        DIRPATH=~/.config/$DIR
-        if [ -d "$DIRPATH" ]; then 
-            echo -e "$CAT - Config for $DIR located, backing up."
-            mv $DIRPATH $DIRPATH-back &>> $INSTLOG
-            echo -e "$COK - Backed up $DIR to $DIRPATH-back."
-        fi
-
-        # make new empty folders
-        mkdir -p $DIRPATH &>> $INSTLOG
-    done
-
-    # link up the config files
-    echo -e "$CNT - Setting up the new config..." 
-    cp -R ~/dotfiles/hypr ~/.config
-    cp -R ~/dotfiles/kitty ~/.config
-    cp -R ~/dotfiles/mako ~/.config
-    cp -R ~/dotfiles/nvim ~/.config
-    cp -R ~/dotfiles/swaylock ~/.config
-    cp -R ~/dotfiles/waybar ~/.config
-    cp -R ~/dotfiles/wlogout ~/.config
-    cp ~/dotfiles/.zshrc ~
-    cp ~/dotfiles/zsh-autosuggestions.zsh ~
-    cp ~/dotfiles/starship.toml ~/.config
-
-    # Copy the SDDM theme
-    echo -e "$CNT - Setting up the login screen."
-    sudo cp -R ~/dotfiles/sdt /usr/share/sddm/themes/
-    sudo chown -R $USER:$USER /usr/share/sddm/themes/sdt
-    sudo mkdir /etc/sddm.conf.d
-    echo -e "[Theme]\nCurrent=sdt" | sudo tee -a /etc/sddm.conf.d/10-theme.conf &>> $INSTLOG
-    WLDIR=/usr/share/wayland-sessions
-    if [ -d "$WLDIR" ]; then
-        echo -e "$COK - $WLDIR found"
-    else
-        echo -e "$CWR - $WLDIR NOT found, creating..."
-        sudo mkdir $WLDIR
-    fi 
-    
-    # stage the .desktop file
-    sudo cp ~/dotfiles/hyprland.desktop /usr/share/wayland-sessions/
-    
-    if [[ "$ISNVIDIA" == true ]]; then
-        # setup nvidia startup file
-        cp ~/dotfiles/start-hypr-nvidia ~/.start-hypr-nvidia
-        sudo sed -i 's/Exec=Hyprland/Exec=\/home\/'$USER'\/.start-hypr-nvidia/' /usr/share/wayland-sessions/hyprland.desktop
-    else
-        # setup non nvidia startup file
-        cp ~/dotfiles/start-hypr-amd ~/.start-hypr-amd
-        sudo sed -i 's/Exec=Hyprland/Exec=\/home\/'$USER'\/.start-hypr-amd/' /usr/share/wayland-sessions/hyprland.desktop
+# Setup each application
+# check for existing config folders and backup 
+for DIR in hypr kitty mako nvim swaylock waybar wlogout
+do 
+    DIRPATH=~/.config/$DIR
+    if [ -d "$DIRPATH" ]; then 
+        echo -e "$CAT - Config for $DIR located, backing up."
+        mv $DIRPATH $DIRPATH-back &>> $INSTLOG
+        echo -e "$COK - Backed up $DIR to $DIRPATH-back."
     fi
 
-    # setup the first look and feel as dark
-    xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"
-    xfconf-query -c xsettings -p /Net/IconThemeName -s "Adwaita-dark"
-    gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
-    gsettings set org.gnome.desktop.interface icon-theme "Adwaita-dark"
-    cp -f ~/dotfiles/backgrounds/mario_hacker.jpg /usr/share/sddm/themes/sdt/wallpaper.jpg
+    # make new empty folders
+    mkdir -p $DIRPATH &>> $INSTLOG
+done
+
+# link up the config files
+echo -e "$CNT - Setting up the new config..." 
+cp -R ~/dotfiles/hypr ~/.config
+cp -R ~/dotfiles/kitty ~/.config
+cp -R ~/dotfiles/mako ~/.config
+cp -R ~/dotfiles/nvim ~/.config
+cp -R ~/dotfiles/swaylock ~/.config
+cp -R ~/dotfiles/waybar ~/.config
+cp -R ~/dotfiles/wlogout ~/.config
+cp ~/dotfiles/.zshrc ~
+cp ~/dotfiles/zsh-autosuggestions.zsh ~
+cp ~/dotfiles/starship.toml ~/.config
+
+# Copy the SDDM theme
+echo -e "$CNT - Setting up the login screen."
+sudo cp -R ~/dotfiles/sdt /usr/share/sddm/themes/
+sudo chown -R $USER:$USER /usr/share/sddm/themes/sdt
+sudo mkdir /etc/sddm.conf.d
+echo -e "[Theme]\nCurrent=sdt" | sudo tee -a /etc/sddm.conf.d/10-theme.conf &>> $INSTLOG
+WLDIR=/usr/share/wayland-sessions
+if [ -d "$WLDIR" ]; then
+    echo -e "$COK - $WLDIR found"
+else
+    echo -e "$CWR - $WLDIR NOT found, creating..."
+    sudo mkdir $WLDIR
+fi 
+
+# stage the .desktop file
+sudo cp ~/dotfiles/hyprland.desktop /usr/share/wayland-sessions/
+
+if [[ "$ISNVIDIA" == true ]]; then
+    # setup nvidia startup file
+    cp ~/dotfiles/start-hypr-nvidia ~/.start-hypr-nvidia
+    sudo sed -i 's/Exec=Hyprland/Exec=\/home\/'$USER'\/.start-hypr-nvidia/' /usr/share/wayland-sessions/hyprland.desktop
+else
+    # setup non nvidia startup file
+    cp ~/dotfiles/start-hypr-amd ~/.start-hypr-amd
+    sudo sed -i 's/Exec=Hyprland/Exec=\/home\/'$USER'\/.start-hypr-amd/' /usr/share/wayland-sessions/hyprland.desktop
 fi
+
+# setup the first look and feel as dark
+xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-dark"
+xfconf-query -c xsettings -p /Net/IconThemeName -s "Adwaita-dark"
+gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+gsettings set org.gnome.desktop.interface icon-theme "Adwaita-dark"
+cp -f ~/dotfiles/backgrounds/mario_hacker.jpg /usr/share/sddm/themes/sdt/wallpaper.jpg
 
 ### Script is done ###
 echo -e "$CNT - Script had completed!"
