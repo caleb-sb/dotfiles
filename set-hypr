@@ -51,7 +51,7 @@
 # sddm-sugar-candy-git [AUR]: Sugar Candy is the sweetest login theme available for the SDDM display manager.
 
 # ripgrep
-# oh-my-posh
+# starship
 # lazygit
 # prettierd
 # dmenu
@@ -193,7 +193,7 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
 
     # Stage 2 - more tools
     echo -e "$CNT - Stage 2 - Installing additional tools and utilities, this may take a while..."
-    for SOFTWR in polkit-gnome python-requests pamixer pavucontrol brightnessctl bluez bluez-utils blueman gvfs thunar-archive-plugin file-roller btop pacman-contrib neovim zsh zsh-completions zsh-syntax-highlighting oh-my-zsh-git dmenu google-chrome meld lazygit oh-my-posh ripgrep prettierd mintstick firefox bibata-cursor-theme
+    for SOFTWR in polkit-gnome python-requests pamixer pavucontrol brightnessctl bluez bluez-utils blueman gvfs thunar-archive-plugin file-roller btop pacman-contrib neovim zsh zsh-completions zsh-syntax-highlighting dmenu google-chrome meld lazygit ripgrep prettierd mintstick firefox bibata-cursor-theme
     do
         install_software $SOFTWR
     done
@@ -227,7 +227,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
 
     # Setup each application
     # check for existing config folders and backup 
-    for DIR in hypr kitty mako nvim oh-my-posh swaylock waybar wlogout
+    for DIR in hypr kitty mako nvim swaylock waybar wlogout
     do 
         DIRPATH=~/.config/$DIR
         if [ -d "$DIRPATH" ]; then 
@@ -246,7 +246,6 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     cp -R ~/dotfiles/kitty ~/.config
     cp -R ~/dotfiles/mako ~/.config
     cp -R ~/dotfiles/nvim ~/.config
-    cp -R ~/dotfiles/oh-my-posh ~/.config
     cp -R ~/dotfiles/swaylock ~/.config
     cp -R ~/dotfiles/waybar ~/.config
     cp -R ~/dotfiles/wlogout ~/.config
