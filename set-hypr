@@ -200,7 +200,7 @@ if [[ $INST == "Y" || $INST == "y" ]]; then
 
     # Stage 3 - some visual tools
     echo -e "$CNT - Stage 3 - Installing theme and visual related tools and utilities, this may take a while..."
-    for SOFTWR in ttf-jetbrains-mono-nerd noto-fonts-emoji lxappearance xfce4-settings sddm qt5-svg qt5-quickcontrols2 qt5-graphicaleffects
+    for SOFTWR in ttf-jetbrains-mono-nerd noto-fonts-emoji lxappearance xfce4-settings sddm qt5-svg qt5-quickcontrols2 qt5-graphicaleffects starship
     do
         install_software $SOFTWR
     done
@@ -252,6 +252,7 @@ if [[ $CFG == "Y" || $CFG == "y" ]]; then
     cp -R ~/dotfiles/wlogout ~/.config
     cp ~/dotfiles/.zshrc ~
     cp ~/dotfiles/zsh-autosuggestions.zsh ~
+    cp ~/dotfiles/starship.toml ~/.config
 
     # Copy the SDDM theme
     echo -e "$CNT - Setting up the login screen."

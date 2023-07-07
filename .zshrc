@@ -501,7 +501,7 @@ alias personal='cp -Rf /personal/* ~'
 
 alias lg="lazygit"
 
-eval "$(oh-my-posh init zsh --config /home/caleb/.config/oh-my-posh/config.json )"
+eval "$(starship init zsh)"
 
 # pnpm
 export PNPM_HOME="/home/caleb/.local/share/pnpm"
