@@ -183,7 +183,7 @@ do
 done
 
 echo -e "$CNT - Stage 1.5 - Installing nodejs tools (the pnpm way)..."
-curl -fsSL https://get.pnpm.io/install.sh | sh - && source ~/.bashrc && pnpm env use --global lts
+curl -fsSL https://get.pnpm.io/install.sh | sh - && ~/.local/share/pnpm/pnpm env use --global lts
 
 # Stage 2 - more tools
 echo -e "$CNT - Stage 2 - Installing additional tools and utilities, this may take a while..."
