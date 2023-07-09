@@ -187,7 +187,7 @@ curl -fsSL https://get.pnpm.io/install.sh | sh - && pnpm env use --global lts
 
 # Stage 2 - more tools
 echo -e "$CNT - Stage 2 - Installing additional tools and utilities, this may take a while..."
-for SOFTWR in polkit-gnome python-requests pamixer pavucontrol brightnessctl bluez bluez-utils blueman gvfs thunar-archive-plugin file-roller btop pacman-contrib neovim zsh zsh-completions zsh-syntax-highlighting dmenu google-chrome meld lazygit ripgrep mintstick firefox prettierd bibata-cursor-theme
+for SOFTWR in polkit-gnome python-requests pamixer pavucontrol brightnessctl bluez bluez-utils blueman gvfs thunar-archive-plugin file-roller btop pacman-contrib neovim zsh zsh-completions zsh-syntax-highlighting oh-my-zsh wl-clipboard cliphist wl-clip-persist-git dmenu google-chrome meld lazygit ripgrep mintstick firefox prettierd bibata-cursor-theme
 do
     install_software $SOFTWR
 done
