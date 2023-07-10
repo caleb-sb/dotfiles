@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -i
 
 # HyprV3 By SolDoesTech - https://www.youtube.com/@SolDoesTech
 # License..? - You may copy, edit and ditribute this script any way you like, enjoy! :)
@@ -184,7 +184,7 @@ done
 
 echo -e "$CNT - Stage 1.5 - Installing nodejs tools (the pnpm way)..."
 curl -fsSL https://get.pnpm.io/install.sh | sh -
-bash -c 'source ~/.bashrc && pnpm env use --global lts'
+source ~/.bashrc && pnpm env use --global lts
 
 # Stage 2 - more tools
 echo -e "$CNT - Stage 2 - Installing additional tools and utilities, this may take a while..."
