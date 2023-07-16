@@ -286,7 +286,7 @@ echo -e "$CNT - Copying config files..."
 
 # Setup each appliaction
 # check for existing config folders and backup 
-for DIR in hypr kitty mako nvim waybar wlogout
+for DIR in backgrounds hypr kitty mako nvim waybar wlogout
 do 
     DIRPATH=~/.config/$DIR
     if [ -d "$DIRPATH" ]; then 
@@ -308,6 +308,7 @@ cp -R ~/dotfiles/nvim ~/.config
 cp -R ~/dotfiles/swaylock ~/.config
 cp -R ~/dotfiles/waybar ~/.config
 cp -R ~/dotfiles/wlogout ~/.config
+cp -R ~/dotfiles/backgrounds ~/.config
 cp ~/dotfiles/.zshrc ~
 cp ~/dotfiles/zsh-autosuggestions.zsh ~
 cp ~/dotfiles/starship.toml ~/.config
