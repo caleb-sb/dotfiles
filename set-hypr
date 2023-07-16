@@ -336,3 +336,5 @@ gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
 
 ### Script is done ###
 echo -e "$CNT - Script had completed!"
+sudo chsh caleb -s /bin/zsh
+exit
