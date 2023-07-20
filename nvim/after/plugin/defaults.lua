@@ -1,5 +1,6 @@
 vim.wo.rnu = true
 vim.opt.list = false
+vim.opt.tabstop = 3
 vim.opt.listchars:append('tab:⇀ ')
 vim.opt.swapfile = false
 -- vim.opt.listchars:append('trail:·')
@@ -38,7 +39,9 @@ local prettier_fmt = function()
   for _, value in ipairs(filetypes) do
     if (ft == value) then
       local buf_path = vim.api.nvim_buf_get_name(0)
+      vim.api.nvim_command(':execute "normal ma"')
       vim.api.nvim_command(":silent%!prettierd " .. buf_path)
+      vim.api.nvim_command(":execute \"normal 'a\"")
       return
     end
   end

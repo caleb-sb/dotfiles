@@ -40,6 +40,7 @@ nvidia_stage=(
 #the main packages
 main_stage=(
     kitty 
+    slurp
     mako 
     waybar
     swww 
@@ -80,6 +81,7 @@ custom_stage=(
     lazygit
     mintstick
     bibata-cursor-theme
+    prettierd
 )
 
 for str in ${myArray[@]}; do
@@ -245,7 +247,7 @@ if [[ "$ISNVIDIA" == true ]]; then
     fi
     install_software hyprland-nvidia
 else
-    install_software hyprland
+    install_software hyprland-git
 fi
 
 # Stage 1 - main components
