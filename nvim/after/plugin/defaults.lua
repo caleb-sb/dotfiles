@@ -31,6 +31,7 @@ local prettier_fmt = function()
     "json",
     "less",
     "markdown",
+    "markdown.mdx",
     "scss",
     "typescript",
     "typescriptreact",
