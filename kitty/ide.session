@@ -1,0 +1,5 @@
+enabled_layouts fat,stack
+layout fat:bias=80;full_size=1;mirrored=false
+launch --cwd=current
+launch --cwd=current
+launch --cwd=current

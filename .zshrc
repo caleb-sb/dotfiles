@@ -500,6 +500,7 @@ alias personal='cp -Rf /personal/* ~'
 #
 
 alias lg="lazygit"
+alias ide="kitty --session ~/.config/kitty/ide.session --detach && exit"
 
 eval "$(starship init zsh)"
 
