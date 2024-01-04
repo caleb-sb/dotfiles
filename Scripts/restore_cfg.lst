@@ -21,3 +21,4 @@ Y|Y|${HOME}/.local/share/kxmlgui5|dolphin|dolphin
 Y|Y|${HOME}/.config|nvim|neovim
 N|Y|${HOME}/.config|starship.toml|starship
 Y|Y|${HOME}/.config|fish|fish
+Y|Y|${HOME}/.config|kanshi|kanshi
