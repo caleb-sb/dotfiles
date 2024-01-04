@@ -19,5 +19,5 @@ Y|Y|${HOME}/.config|dolphinrc kdeglobals|dolphin
 Y|Y|${HOME}/.local/share|dolphin|dolphin
 Y|Y|${HOME}/.local/share/kxmlgui5|dolphin|dolphin
 Y|Y|${HOME}/.config|nvim|neovim
-Y|Y|${HOME}/.config|starship.toml|starship
+N|Y|${HOME}/.config|starship.toml|starship
 Y|Y|${HOME}/.config|fish|fish
