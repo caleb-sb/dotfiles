@@ -12,6 +12,7 @@ fi
 
 # pnpm
 curl -fsSL https://get.pnpm.io/install.sh | SHELL="$(which fish)" sh -
+source ~/.config/fish/config.fish
 # node
 pnpm env use --global lts
 
