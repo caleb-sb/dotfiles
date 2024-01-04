@@ -103,8 +103,7 @@ rm install_pkg.lst
 #---------------------------#
 # Copying over config #
 #---------------------------#
-if [ $flg_Restore -eq 1 ]; then
-	cat <<"EOF"
+cat <<"EOF"
 
    _     _   ___ _ _
  _| |___| |_|  _|_| |___ ___
@@ -115,13 +114,11 @@ EOF
 
 	./restore_fnt.sh
 	./restore_cfg.sh
-fi
 
 #---------------------#
 # post-install script #
 #---------------------#
-if [ $flg_Install -eq 1 ] && [ $flg_Restore -eq 1 ]; then
-	cat <<"EOF"
+cat <<"EOF"
 
              _      _         _       _ _ 
  ___ ___ ___| |_   |_|___ ___| |_ ___| | |
@@ -132,13 +129,11 @@ if [ $flg_Install -eq 1 ] && [ $flg_Restore -eq 1 ]; then
 EOF
 
 	./install_pst.sh
-fi
 
 #------------------------#
 # enable system services #
 #------------------------#
-if [ $flg_Service -eq 1 ]; then
-	cat <<"EOF"
+cat <<"EOF"
 
                  _             
  ___ ___ ___ _ _|_|___ ___ ___ 
@@ -150,4 +145,3 @@ EOF
 	while read service; do
 		service_ctl $service
 	done <system_ctl.lst
-fi
