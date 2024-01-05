@@ -226,8 +226,8 @@
   },
 
   "tray": {
-    "icon-size": 12,
-    "spacing": 5
+    "icon-size": 22,
+    "spacing": 8
   },
 
   "battery": {
@@ -330,7 +330,7 @@
   },
 
   "custom/padd": {
-    "format": "  ",
+    "format": " ",
     "interval": "once",
     "tooltip": false
   },
