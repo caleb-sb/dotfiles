@@ -40,7 +40,6 @@ if pkg_installed zsh && pkg_installed oh-my-zsh-git; then
 
 else
 	echo "WARNING: zsh is not installed..."
-	exit 0
 fi
 
 # set shell
