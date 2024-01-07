@@ -5,4 +5,5 @@ alias ld='eza -lhD --icons=auto' # long list dirs
 alias lg='lazygit'
 alias ide='kitty --session ~/.config/kitty/ide.session --detach && exit'
 
-starship init fish | source
+set -g theme_display_date no
+set -g theme_color_scheme terminal
