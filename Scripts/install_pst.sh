@@ -13,9 +13,6 @@ fi
 # pnpm
 curl -fsSL https://get.pnpm.io/install.sh | SHELL="$(which fish)" sh -
 
-# oh-my-fish
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-
 # sddm
 if pkg_installed sddm; then
 
