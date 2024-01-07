@@ -42,7 +42,6 @@ qt5-quickcontrols
 qt5-quickcontrols2
 qt5-graphicaleffects
 qt6-wayland
-qt6ct
 waybar
 wireplumber
 wlogout
